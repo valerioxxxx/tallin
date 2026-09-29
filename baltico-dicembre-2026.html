@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tallinn, Helsinki, Riga: 16–21 dicembre 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1F2; --surface:#F9FBFB; --surface-2:#E2E8EA; --ink:#13263A; --ink-soft:#4A5D6E; --line:#C9D4D9;
+  --sea:#BFD2DC; --land:#F4F6F4; --land-2:#E6ECE8;
+  --amber:#B57A12; --glogg:#A3303A; --pine:#2E6B5E; --route:#13263A;
+  --riga:var(--amber); --tallinn:var(--glogg); --helsinki:var(--pine);
+  --focus:#1F6FB2;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1D2B; --surface:#152838; --surface-2:#1C3346; --ink:#E4ECF0; --ink-soft:#9DB0BE; --line:#2A4358;
+    --sea:#0B2A40; --land:#1B3144; --land-2:#223A4F;
+    --amber:#E3A73B; --glogg:#E0646E; --pine:#5FB39F; --route:#E4ECF0; --focus:#7DB8F0;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1D2B; --surface:#152838; --surface-2:#1C3346; --ink:#E4ECF0; --ink-soft:#9DB0BE; --line:#2A4358;
+  --sea:#0B2A40; --land:#1B3144; --land-2:#223A4F;
+  --amber:#E3A73B; --glogg:#E0646E; --pine:#5FB39F; --route:#E4ECF0; --focus:#7DB8F0;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.55;font-variation-settings:"wdth" 100;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+img,svg{max-width:100%}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.num{font-variant-numeric:tabular-nums}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:18px;height:56px;overflow-x:auto;scrollbar-width:none}
+.nav .wrap::-webkit-scrollbar{display:none}
+.nav strong{font-weight:750;font-variation-settings:"wdth" 80;white-space:nowrap;margin-right:auto}
+.nav a{text-decoration:none;color:var(--ink-soft);white-space:nowrap;font-size:15px;padding:6px 2px}
+.nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding:40px 0 24px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:32px;align-items:center}
+.hero h1{margin:0;font-weight:800;font-variation-settings:"wdth" 75;font-size:clamp(56px,9.5vw,118px);line-height:.86;letter-spacing:-.02em}
+.hero h1 span{display:block}
+.hero h1 .c1{color:var(--riga)}.hero h1 .c2{color:var(--tallinn)}.hero h1 .c3{color:var(--helsinki)}
+.dates{font-size:clamp(20px,2.4vw,26px);font-weight:600;margin:22px 0 8px}
+.lede{color:var(--ink-soft);max-width:34em;margin:0 0 22px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 22px;margin:0;padding:0;list-style:none}
+.facts li{font-size:15px;color:var(--ink-soft)}
+.facts b{display:block;color:var(--ink);font-size:24px;font-weight:750;font-variation-settings:"wdth" 85}
+.overview{background:var(--sea);border-radius:22px;overflow:hidden;position:relative}
+.overview svg{display:block;width:100%;height:auto}
+.overview .hint{position:absolute;left:14px;bottom:12px;font-size:13px;color:var(--ink-soft);background:color-mix(in srgb,var(--surface) 85%,transparent);padding:4px 10px;border-radius:99px}
+.city-hit{cursor:pointer}
+.city-hit:focus-visible{outline:none}
+.city-hit:focus-visible circle.halo{stroke:var(--focus);stroke-width:4}
+.draw{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s .3s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.draw{animation:none;stroke-dashoffset:0}}
+
+section{padding:56px 0 8px}
+h2{font-size:clamp(32px,4.5vw,48px);font-weight:800;font-variation-settings:"wdth" 78;line-height:1;margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--ink-soft);margin:0 0 28px;max-width:40em}
+
+/* itinerary */
+.days{display:grid;gap:18px}
+.day{background:var(--surface);border:1px solid var(--line);border-radius:18px;display:grid;grid-template-columns:150px 1fr;overflow:hidden}
+.day-head{padding:22px 20px;border-right:1px solid var(--line);position:relative}
+.day-head::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.day-n{font-size:64px;font-weight:800;font-variation-settings:"wdth" 75;line-height:.9;color:var(--c)}
+.day-d{font-weight:650;margin-top:6px}
+.day-r{font-size:14px;color:var(--ink-soft)}
+.day-body{padding:18px 22px}
+.day-body h3{margin:0 0 12px;font-size:22px;font-weight:700;line-height:1.2}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:62px 1fr auto;gap:4px 14px;padding:11px 0;border-top:1px dashed var(--line)}
+.steps li:first-child{border-top:0}
+.t{font-weight:650;font-size:15px;padding-top:1px}
+.what b{font-weight:650}
+.what p{margin:2px 0 0;color:var(--ink-soft);font-size:15px}
+.cost{font-size:15px;font-weight:600;white-space:nowrap;text-align:right}
+.maplink{background:none;border:0;padding:0;margin-top:4px;font:inherit;font-size:14px;color:var(--c);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.links{display:inline-flex;flex-wrap:wrap;gap:4px 16px}
+.photolink{display:inline-block}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;border-radius:99px;padding:1px 9px;margin-left:6px;vertical-align:2px;background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--c)}
+
+/* map */
+.map-shell{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.map-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:99px;padding:4px;gap:2px}
+.seg button{border:0;background:none;font:inherit;font-size:15px;font-weight:600;color:var(--ink-soft);padding:7px 14px;border-radius:99px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.seg button .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips button{border:1px solid var(--line);background:none;font:inherit;font-size:14px;color:var(--ink-soft);padding:5px 11px;border-radius:99px;cursor:pointer}
+.chips button[aria-pressed="true"]{border-color:var(--ink);color:var(--ink);font-weight:650}
+.map-grid{display:grid;grid-template-columns:1fr 340px}
+.map-canvas{background:var(--sea);position:relative;min-height:300px}
+.map-canvas svg{display:block;width:100%;height:auto;touch-action:manipulation}
+.pin{cursor:pointer}
+.pin circle.b{stroke:var(--surface);stroke-width:3;transition:r .15s}
+.pin text{font-size:13px;font-weight:750;fill:#fff;pointer-events:none}
+.pin.dim{opacity:.22}
+.pin.sel circle.ring{stroke:var(--ink);stroke-width:2.5;fill:none}
+.pin:focus-visible{outline:none}.pin:focus-visible circle.ring{stroke:var(--focus);stroke-width:4}
+.panel{border-left:1px solid var(--line);display:flex;flex-direction:column;max-height:620px}
+.info{padding:18px 18px 14px;border-bottom:1px solid var(--line);min-height:170px}
+.info h4{margin:0 0 4px;font-size:20px;line-height:1.2;font-weight:700}
+.info .meta{font-size:14px;color:var(--ink-soft);margin-bottom:8px}
+.info .price{display:inline-block;font-weight:650;font-size:15px;background:var(--surface-2);padding:2px 10px;border-radius:8px;margin-bottom:8px}
+.info p{margin:0;font-size:15px}
+.info.empty p{color:var(--ink-soft)}
+.plist{list-style:none;margin:0;padding:6px 0;overflow-y:auto;flex:1}
+.plist button{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;width:100%;text-align:left;background:none;border:0;font:inherit;color:inherit;padding:8px 16px;cursor:pointer;font-size:15px;line-height:1.3}
+.plist button:hover{background:var(--surface-2)}
+.plist button[aria-current="true"]{background:var(--surface-2);font-weight:650}
+.plist .n{width:24px;height:24px;border-radius:50%;color:#fff;font-size:12.5px;font-weight:750;display:grid;place-items:center}
+.plist small{display:block;color:var(--ink-soft);font-weight:400;font-size:13px}
+.plist li.dim{opacity:.4}
+.offmap{padding:10px 16px 14px;font-size:14px;color:var(--ink-soft);border-top:1px solid var(--line)}
+
+/* transport */
+.tx{display:grid;gap:14px}
+.leg{display:grid;grid-template-columns:120px 1fr 150px;gap:18px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.leg .when{font-weight:650}
+.leg .when small{display:block;font-weight:400;color:var(--ink-soft);font-size:14px}
+.leg h3{margin:0 0 4px;font-size:20px;font-weight:700}
+.leg p{margin:0;color:var(--ink-soft);font-size:15.5px}
+.leg .pp{text-align:right;font-size:22px;font-weight:750;font-variation-settings:"wdth" 85}
+.leg .pp small{display:block;font-size:13px;font-weight:400;color:var(--ink-soft)}
+.mode{display:inline-block;font-size:13px;font-weight:650;padding:2px 10px;border-radius:99px;background:var(--surface-2);margin-bottom:6px}
+.note{margin-top:16px;padding:16px 20px;border-radius:14px;background:var(--surface-2);font-size:15.5px}
+.note p{margin:0 0 8px}.note p:last-child{margin:0}
+
+/* budget */
+.budget{display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start}
+.controls{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px)}
+.controls label{display:block;font-weight:650;margin:0 0 8px}
+.stepper{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.stepper button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);font:inherit;font-size:22px;color:var(--ink);cursor:pointer;line-height:1}
+.stepper output{font-size:30px;font-weight:750;min-width:2ch;text-align:center}
+.big{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.big .pp{font-size:52px;font-weight:800;font-variation-settings:"wdth" 75;line-height:1}
+.big .grp{font-size:18px;font-weight:650;margin-top:8px}
+.big small{color:var(--ink-soft);font-size:14px;display:block}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:8px 20px}
+.row{display:grid;grid-template-columns:1fr 90px;gap:4px 14px;padding:13px 0;border-top:1px solid var(--line)}
+.row:first-child{border-top:0}
+.row b{font-weight:650}
+.row .v{text-align:right;font-weight:700;font-size:18px}
+.row p{margin:0;grid-column:1/-1;font-size:14px;color:var(--ink-soft)}
+.bar{grid-column:1/-1;height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ink);border-radius:99px;transition:width .3s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.tip{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+.tip h3{margin:0 0 6px;font-size:18px;font-weight:700}
+.tip p{margin:0;font-size:15.5px;color:var(--ink-soft)}
+footer{padding:48px 0 60px;color:var(--ink-soft);font-size:14px}
+footer p{max-width:60em}
+
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .overview{max-width:520px}
+  .map-grid{grid-template-columns:1fr}
+  .panel{border-left:0;border-top:1px solid var(--line);max-height:none}
+  .plist{max-height:320px}
+  .budget{grid-template-columns:1fr}
+  .controls{position:static}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .day{grid-template-columns:1fr}
+  .day-head{border-right:0;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;padding:16px 18px 14px 24px}
+  .day-n{font-size:48px}
+  .steps li{grid-template-columns:52px 1fr}
+  .cost{grid-column:2;text-align:left;font-weight:600;color:var(--ink-soft)}
+  .leg{grid-template-columns:1fr;gap:6px}
+  .leg .pp{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sezioni">
+  <div class="wrap">
+    <strong>Baltico d'inverno</strong>
+    <a href="#itinerario">Itinerario</a>
+    <a href="#mappa">Mappa</a>
+    <a href="#trasporti">Voli e trasporti</a>
+    <a href="#budget">Budget</a>
+    <a href="#consigli">Consigli</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1><span class="c2">Tallinn</span><span class="c3">Helsinki</span><span class="c1">Riga</span></h1>
+      <p class="dates num">Da mercoledì 16 a lunedì 21 dicembre 2026</p>
+      <p class="lede">Si atterra a Tallinn e si resta tre notti in Città Vecchia, con Helsinki in giornata via traghetto. Poi bus fino a Riga, da dove parte il volo di ritorno. Mercatini di Natale, sauna con tuffo nel Baltico, celle del KGB e palude ghiacciata all'alba. Per un gruppo di 8 persone con budget contenuto.</p>
+      <ul class="facts num">
+        <li><b>~€658</b>a persona in 8, scenario medio</li>
+        <li><b>€149</b>a testa per 5 notti in Airbnb</li>
+        <li><b>€131</b>di voli diretti</li>
+      </ul>
+    </div>
+    <figure class="overview" style="margin:0">
+      <svg id="overview" role="img" aria-label="Mappa del percorso: Roma, Tallinn, Helsinki, Tallinn, Riga, Roma"></svg>
+      <span class="hint">Tocca una città per aprire la sua mappa</span>
+    </figure>
+  </div>
+</header>
+
+<main>
+<section id="itinerario">
+  <div class="wrap">
+    <h2>Itinerario giorno per giorno</h2>
+    <p class="sub">Orari indicativi, pensati sulle poche ore di luce di dicembre (a Helsinki il sole tramonta verso le 15:15). I costi sono a persona.</p>
+    <div class="days" id="days"></div>
+  </div>
+</section>
+
+<section id="mappa">
+  <div class="wrap">
+    <h2>Mappa interattiva</h2>
+    <p class="sub">Scegli la città, filtra per giorno e tocca un punto per vedere orario, costo e dettagli. Le mappe sono schematiche, con posizioni reali in scala.</p>
+    <div class="map-shell">
+      <div class="map-bar">
+        <div class="seg" role="group" aria-label="Città" id="cityTabs"></div>
+        <div class="chips" role="group" aria-label="Filtra per giorno" id="dayChips"></div>
+      </div>
+      <div class="map-grid">
+        <div class="map-canvas"><svg id="citymap" role="img" aria-label="Mappa della città con i punti dell'itinerario"></svg></div>
+        <div class="panel">
+          <div class="info empty" id="info" aria-live="polite"><p>Seleziona un punto sulla mappa o dall'elenco.</p></div>
+          <ul class="plist" id="plist"></ul>
+          <div class="offmap" id="offmap" hidden></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trasporti">
+  <div class="wrap">
+    <h2>Voli e trasporti</h2>
+    <p class="sub">Due voli di sola andata già individuati: arrivo a Tallinn, ripartenza da Riga. Helsinki si fa in giornata con il traghetto da Tallinn. Prezzi a persona.</p>
+    <div class="tx">
+      <div class="leg">
+        <div class="when">Mer 16 dic<small>06:10 – 10:45</small></div>
+        <div><span class="mode">Aereo</span><h3>Roma Fiumicino → Tallinn, Wizz Air</h3><p>Diretto, 3 ore 35. Solo zaino sotto il sedile, massimo 40 × 30 × 20 cm.</p></div>
+        <div class="pp num">€55<small>sola andata</small></div>
+      </div>
+      <div class="leg">
+        <div class="when">Gio 17 dic<small>07:30 – 09:30 e 19:30 – 21:30</small></div>
+        <div><span class="mode">Traghetto</span><h3>Tallinn ↔ Helsinki in giornata</h3><p>Andata Tallinn → Helsinki alle 7:30, ritorno Helsinki → Tallinn alle 19:30, €35 in tutto. Due ore per tratta, bagagli a bordo senza limiti. Il ritorno serale lascia il tempo per Löyly nella fascia delle 16:00.</p></div>
+        <div class="pp num">€35<small>andata e ritorno</small></div>
+      </div>
+      <div class="leg">
+        <div class="when">Sab 19 dic<small>09:40 – 14:00</small></div>
+        <div><span class="mode">Bus</span><h3>Tallinn → Riga, FlixBus</h3><p>Diretto, da autostazione ad autostazione, 4 ore e 20. Quella di Riga è accanto al Mercato Centrale e a 10 minuti a piedi dal centro storico.</p></div>
+        <div class="pp num">€16,98<small>commissione inclusa</small></div>
+      </div>
+      <div class="leg">
+        <div class="when">Lun 21 dic<small>10:15 – 12:25</small></div>
+        <div><span class="mode">Aereo</span><h3>Riga → Roma Fiumicino, Ryanair</h3><p>Diretto, 3 ore 10, operato da Ryanair Sun. Solo zaino sotto il sedile, massimo 40 × 20 × 25 cm.</p></div>
+        <div class="pp num">€76<small>sola andata</small></div>
+      </div>
+    </div>
+    <div class="note">
+      <p><b>Trucco per gruppi.</b> Le compagnie vendono i posti a scaglioni di prezzo: cercando 6 biglietti insieme il sistema può applicare a tutti la tariffa più alta disponibile. Cerca prima per 1 passeggero, poi per 6: se il prezzo sale, prenotate in due gruppi da 3.</p>
+      <p><b>Solo zaino.</b> Viaggiate con la tariffa base: lo zaino deve stare sotto il sedile. Misure massime: Wizz Air 40 × 30 × 20 cm, Ryanair 40 × 20 × 25 cm. Indossate in volo giacca e scarpe pesanti e tenete i liquidi in contenitori da 100 ml. Sul traghetto e sul bus non ci sono limiti.</p>
+    </div>
+  </div>
+</section>
+
+<section id="budget">
+  <div class="wrap">
+    <h2>Budget totale</h2>
+    <p class="sub">Stima per persona con i voli e gli Airbnb che avete scelto (il costo degli alloggi si divide per il numero di persone), colazione fatta in casa e cene economiche. Cambia il numero di persone e lo scenario per vedere il totale del gruppo.</p>
+    <div class="budget">
+      <div class="controls">
+        <label id="pl">Persone nel gruppo</label>
+        <div class="stepper" role="group" aria-labelledby="pl">
+          <button type="button" id="minus" aria-label="Una persona in meno">−</button>
+          <output id="people" class="num" aria-live="polite">6</output>
+          <button type="button" id="plus" aria-label="Una persona in più">+</button>
+        </div>
+        <label id="sl">Scenario</label>
+        <div class="seg" role="group" aria-labelledby="sl" id="scen"></div>
+        <div class="big num">
+          <small>A persona</small>
+          <div class="pp" id="ppTot">€0</div>
+          <div class="grp" id="grpTot"></div>
+        </div>
+      </div>
+      <div class="rows" id="rows"></div>
+    </div>
+  </div>
+</section>
+
+<section id="consigli">
+  <div class="wrap">
+    <h2>Consigli pratici</h2>
+    <p class="sub">Le cose che fanno la differenza a dicembre, con un gruppo e un budget stretto.</p>
+    <div class="tips">
+      <div class="tip"><h3>Luce e freddo</h3><p>Circa 6 ore di luce a Helsinki, 7 a Riga. Temperature tipiche tra −5 e +2 °C, spesso neve bagnata o ghiaccio. Strati, berretto, guanti e scarpe impermeabili con suola che non scivoli.</p></div>
+      <div class="tip"><h3>Il volo delle 6:10</h3><p>Il check-in a Fiumicino va fatto verso le 4:30–5:00, prima dei treni utili. Con 8 persone conviene un minivan NCC o due taxi prenotati, divisi tra tutti; in alternativa auto propria con parcheggio o una notte vicino all'aeroporto.</p></div>
+      <div class="tip"><h3>Fuso orario</h3><p>Lettonia, Estonia e Finlandia sono un'ora avanti rispetto all'Italia. Tutte usano l'euro e la carta è accettata quasi ovunque; tieni un po' di contanti per la terrazza di Riga.</p></div>
+      <div class="tip"><h3>Da prenotare subito</h3><p>Alloggi (a dicembre il centro si riempie), voli, Löyly per giovedì alle 16:00 (fasce di 2 ore, cancellazione gratuita fino a 24 ore prima). Il bus e il traghetto si possono prenotare 3–4 settimane prima.</p></div>
+      <div class="tip"><h3>Sauna, istruzioni</h3><p>A Löyly il costume è obbligatorio (noleggiabile), asciugamano incluso. Il tuffo in mare dipende dal meteo: entrate per pochi secondi, sempre accompagnati, e tornate subito al caldo. Portate ciabatte.</p></div>
+      <div class="tip"><h3>Mangiare spendendo poco</h3><p>Zuppe da III Draakon a Tallinn, pranzi nei mercati coperti, piatti abbondanti al Folkklubs di Riga. A Riga il buffet Lido è un buon piano B economico. Colazioni e due cene in appartamento: con 8 persone la spesa divisa costa pochissimo.</p></div>
+      <div class="tip"><h3>Sconti per under 26 e studenti</h3><p>Chi è studente porti la tessera universitaria o la carta ISIC e chieda sempre il biglietto ridotto: alle celle del KGB si paga €8 invece di €10, e molti musei e piste di pattinaggio hanno tariffe ridotte. A Löyly non ci sono sconti.</p></div>
+      <div class="tip"><h3>Documenti e salute</h3><p>Basta la carta d'identità valida per l'espatrio (area Schengen). Portate la tessera sanitaria europea e valutate un'assicurazione con copertura per ritardi e bagagli.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Prezzi e orari raccolti a fine settembre 2026 da siti di compagnie, comparatori e guide; sono stime e cambiano con la domanda. Verifica sempre sul sito ufficiale prima di prenotare, soprattutto per Patarei (in riapertura come museo nel 2026) e per gli orari invernali dei musei.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var C = {riga:"var(--riga)", tallinn:"var(--tallinn)", helsinki:"var(--helsinki)"};
+var CITY_NAME = {riga:"Riga", tallinn:"Tallinn", helsinki:"Helsinki"};
+
+/* ---------- Points of interest (real coordinates) ---------- */
+var POIS = [
+ {id:"ta",city:"tallinn",day:1,time:"11:30",name:"Il vostro appartamento (zona Raekoja plats)",cost:"€828 in 8, €103,50 a persona per 3 notti",lat:59.4364,lon:24.7472,desc:"Airbnb intero, 3 camere, 5 letti, 2 bagni, dal 16 al 19 dicembre. Posizione indicativa: vicino alla Piazza del Municipio. Chiedete se potete lasciare i bagagli prima del check-in."},
+ {id:"t2",city:"tallinn",day:1,time:"14:00",name:"Celle della prigione del KGB",cost:"€10",lat:59.4386,lon:24.7437,desc:"Il seminterrato di Pagari 1, dove il KGB interrogava e deteneva i prigionieri. In inverno apre da mercoledì a domenica, 11–18. Intenso e breve: circa un'ora."},
+ {id:"t3",city:"tallinn",day:1,time:"15:00",name:"Belvedere Kohtuotsa, Toompea",cost:"Gratis",lat:59.4379,lon:24.7390,desc:"La vista classica sui tetti rossi e le guglie della città bassa. Il sole tramonta intorno alle 15:20: siete lì al momento giusto."},
+ {id:"t4",city:"tallinn",day:1,time:"17:00",name:"Mercatino di Natale in Piazza del Municipio",cost:"Gratis, glögi ~€5–6",lat:59.4372,lon:24.7453,desc:"Tallinn rivendica il primo albero di Natale pubblico d'Europa, nel 1441. Nel 2026 il mercatino è aperto dal 20 novembre al 6 gennaio; le bancarelle chiudono alle 20, i chioschi di bevande calde alle 22. Decine di varietà di glögi, anche analcoliche."},
+ {id:"t5",city:"tallinn",day:1,time:"19:00",name:"III Draakon, taverna medievale",cost:"~€4–8",lat:59.43685,lon:24.7446,desc:"Nel piano terra del municipio: zuppa d'alce in ciotole di coccio, pasticci di carne, birra in boccali, candele e niente posate. Economica e molto teatrale, perfetta per un gruppo."},
+ {id:"t10",city:"tallinn",day:2,time:"07:30",name:"Porto vecchio: traghetto per Helsinki",cost:"€35 andata e ritorno, prenotato",lat:59.4415,lon:24.7700,desc:"Partenza 7:30, arrivo a Helsinki 9:30. Controllate sul biglietto da quale terminal si parte (Tallink usa il D, Eckerö l'A). Dall'appartamento sono 15–20 minuti a piedi: uscite verso le 6:45. Viaggiate leggeri, i bagagli restano a Tallinn."},
+ {id:"t9",city:"tallinn",day:3,time:"10:30",name:"Telliskivi Creative City",cost:"Gratis",lat:59.4398,lon:24.7305,desc:"Ex fabbriche trasformate in quartiere creativo: murales, negozi di design, caffè. Mattina tranquilla dopo la giornata lunga a Helsinki."},
+ {id:"t8",city:"tallinn",day:3,time:"12:00",name:"Mercato Balti Jaam",cost:"Pranzo ~€8–12",lat:59.4408,lon:24.7360,desc:"Mercato coperto accanto alla stazione: street food, prodotti estoni e un piano di bancarelle vintage con oggetti d'epoca sovietica."},
+ {id:"t7",city:"tallinn",day:3,time:"13:30",name:"Fortezza-prigione di Patarei",cost:"Esterni gratis",lat:59.4496,lon:24.7426,desc:"Ex fortezza zarista usata come prigione sovietica fino al 2002, in trasformazione nel Museo internazionale delle vittime del comunismo. Controllate sul sito se in dicembre è aperta; in caso contrario il lungomare resta suggestivo."},
+ {id:"t6",city:"tallinn",day:3,time:"14:45",name:"Linnahall, arena sovietica sul mare",cost:"Gratis",lat:59.4462,lon:24.7530,desc:"Enorme struttura in cemento costruita per le Olimpiadi di Mosca del 1980, oggi in abbandono. Verso il tramonto, vista dall'esterno, sembra un tempio brutalista sul golfo. Poi serata libera in Città Vecchia."},
+ {id:"tsk",city:"tallinn",day:3,time:"18:00",name:"Pattinaggio sul ghiaccio in Città Vecchia",cost:"~€9–11 l'ora + pattini €5–9",lat:59.4362,lon:24.7427,desc:"Pista all'aperto in Harju tänav, accanto alla chiesa di San Nicola: illuminata, con musica e un caffè caldo a bordo pista. Aperta tutti i giorni 10–22, il biglietto vale un'ora. Chiedete lo sconto studenti alla cassa. Dall'appartamento sono 5 minuti a piedi."},
+ {id:"tcc",city:"tallinn",day:3,time:"20:30",name:"Facoltativo: concerto a lume di candela",cost:"da €28",lat:59.4394,lon:24.7462,desc:"Candlelight nella Casa delle Confraternite delle Teste Nere, sala del XVI secolo illuminata solo da candele. Venerdì 18 dicembre in programma “Ed Sheeran meets Coldplay” alle 20:30. Da prenotare online su Fever; se costa troppo, serata in un bar di Kalamaja."},
+ {id:"t1",city:"tallinn",day:4,time:"09:40",name:"Autostazione: FlixBus per Riga",cost:"€16,98, prenotato",lat:59.4275,lon:24.7710,desc:"FlixBus diretto, partenza 9:40, arrivo a Riga alle 14:00. Dall'appartamento in tram o 25 minuti a piedi: uscite verso le 9:00 dopo il check-out. Portate qualcosa da mangiare per il viaggio."},
+
+ {id:"h1",city:"helsinki",day:2,time:"09:30",name:"Arrivo al Porto Ovest (terminal T2)",cost:"Biglietto giornaliero HSL €10,60",lat:60.1500,lon:24.9180,desc:"Comprate subito il giornaliero HSL nell'app: copre tram, bus e il traghetto per Suomenlinna. Il tram porta in centro in pochi minuti."},
+ {id:"h3",city:"helsinki",day:2,time:"10:00",name:"Piazza del Mercato: traghetto per Suomenlinna",cost:"Incluso nel giornaliero",lat:60.1672,lon:24.9530,desc:"Il traghetto per Suomenlinna fa parte del trasporto pubblico. Circa 15 minuti di navigazione tra il ghiaccio."},
+ {id:"h4",city:"helsinki",day:2,time:"10:20",name:"Fortezza di Suomenlinna",cost:"Gratis (musei a pagamento)",lat:60.1454,lon:24.9881,desc:"Fortezza del XVIII secolo su sei isole, patrimonio UNESCO. D'inverno è quasi deserta: bastioni innevati, cannoni, vista sul mare aperto. Passeggiata di circa 2 ore."},
+ {id:"h5",city:"helsinki",day:2,time:"12:30",name:"Vecchio mercato coperto",cost:"Zuppa di salmone ~€14–16",lat:60.1664,lon:24.9545,desc:"Mercato del 1889 con banchi di pesce e caffè. La zuppa di salmone con pane di segale è il pranzo classico."},
+ {id:"h6",city:"helsinki",day:2,time:"13:30",name:"Mercatino di Natale in Piazza del Senato",cost:"Gratis, glögi ~€5",lat:60.1695,lon:24.9525,desc:"Tuomaan Markkinat, il mercatino più antico della città, davanti alla cattedrale bianca. Nel 2026 è aperto dal 27 novembre al 22 dicembre, il giovedì 11–19. Giostra d'epoca gratuita."},
+ {id:"h7",city:"helsinki",day:2,time:"14:15",name:"Chiesa nella roccia Temppeliaukio",cost:"~€5–8",lat:60.1731,lon:24.9253,desc:"Chiesa scavata nel granito con una cupola di rame e un'acustica straordinaria."},
+ {id:"h8",city:"helsinki",day:2,time:"15:00",name:"Biblioteca Oodi",cost:"Gratis",lat:60.1737,lon:24.9381,desc:"Biblioteca pubblica che sembra un'astronave di legno: stampanti 3D, macchine da cucire, videogiochi, terrazza. Breve sosta al caldo prima della sauna."},
+ {id:"h2",city:"helsinki",day:2,time:"16:00",name:"Löyly: sauna a legna e tuffo nel Baltico",cost:"€29 per 2 ore",lat:60.1520,lon:24.9275,desc:"L'esperienza del viaggio. Sauna a fumo e sauna a legna in un edificio di legno sul mare, con accesso diretto all'acqua gelata. Il biglietto include asciugamano, telo per la seduta, shampoo e docciaschiuma. Costume obbligatorio, noleggio circa €8. Prenotate la fascia delle 16:00 (fine alle 18:00): Löyly è a 15 minuti a piedi dal porto e il traghetto parte alle 19:30."},
+ {id:"h9",city:"helsinki",day:2,time:"19:30",name:"Porto Ovest: traghetto per Tallinn",cost:"Incluso nei €35 andata e ritorno",lat:60.1493,lon:24.9163,desc:"Partenza 19:30, arrivo a Tallinn 21:30. Siate al terminal verso le 18:45: il check-in chiude da 20 a 45 minuti prima della partenza, secondo la compagnia."},
+
+ {id:"r9",city:"riga",day:4,time:"14:00",name:"Arrivo all'autostazione di Riga",cost:"",lat:56.9453,lon:24.1156,desc:"L'autostazione è accanto al Mercato Centrale e a circa 10 minuti a piedi dal centro storico."},
+ {id:"r5",city:"riga",day:4,time:"14:10",name:"Mercato Centrale negli hangar degli zeppelin",cost:"Pranzo ~€8–10",lat:56.9440,lon:24.1147,desc:"Cinque padiglioni nati come hangar per dirigibili, patrimonio UNESCO. Pesce affumicato, pirāgi (fagottini alla pancetta), crauti, miele. Uno dei posti più particolari del Baltico per mangiare poco."},
+ {id:"ra",city:"riga",day:4,time:"16:15",name:"Il vostro appartamento (centro storico)",cost:"€366 in 8, €45,75 a persona per 2 notti",lat:56.9482,lon:24.1085,desc:"Airbnb intero, 2 camere, 4 letti, 2 bagni, dal 19 al 21 dicembre. Posizione indicativa nel centro storico."},
+ {id:"r6",city:"riga",day:4,time:"15:15",name:"Terrazza Panorama Riga, Accademia delle Scienze",cost:"€8, solo contanti",lat:56.9426,lon:24.1206,desc:"Il grattacielo staliniano detto “la torta di compleanno di Stalin”. Ascensore fino al 15° piano, poi due rampe fino alla terrazza a 65 m. È a due passi dal mercato: arrivate prima del tramonto, verso le 15:45. Se avete i bagagli, chiedete se si possono lasciare all'ingresso, oppure portate prima le valigie in appartamento e saltate il mercato."},
+ {id:"r1",city:"riga",day:4,time:"17:00",name:"Mercatino di Natale in Piazza del Duomo",cost:"Gratis, vin brulé ~€4–5",lat:56.9491,lon:24.1047,desc:"Il mercatino principale di Riga, sotto la cattedrale: bancarelle di legno, artigianato lettone, cibo tradizionale. Il sabato ci sono cori e gruppi musicali sul palco."},
+ {id:"r2",city:"riga",day:4,time:"18:00",name:"Piazza del Municipio e Casa delle Teste Nere",cost:"Gratis",lat:56.9474,lon:24.1068,desc:"Una targa ricorda il primo albero di Natale decorato di cui si abbia notizia, nel 1510: i mercanti lo addobbarono, ci ballarono intorno e poi lo bruciarono."},
+ {id:"r3",city:"riga",day:4,time:"19:30",name:"Folkklubs ALA Pagrabs: cena e musica dal vivo",cost:"Piatti ~€12–20, birre locali",lat:56.9458,lon:24.1078,desc:"Enorme cantina medievale sotto la Città Vecchia, frequentata da studenti e locali. Circa 32 birre e sidri lettoni alla spina, cucina tradizionale (piselli grigi con pancetta, pane di segale), musica dal vivo quasi ogni sera. Il sabato resta aperta fino alle 5. Prenotate un tavolo per 8: il sabato si riempie. Provate il Riga Black Balsam."},
+ {id:"r4",city:"riga",day:5,time:"07:30",name:"Stazione centrale: treno per Ķemeri",cost:"~€2–3 a tratta",lat:56.9467,lon:24.1206,desc:"Treno regionale verso Jūrmala e Ķemeri, circa un'ora. Controllate l'orario del ritorno prima di partire: la domenica d'inverno le corse sono meno frequenti."},
+ {id:"rk",city:"riga",day:5,time:"08:30",off:true,name:"Grande Palude di Ķemeri",cost:"Gratis",lat:56.955,lon:23.47,desc:"A circa 40 km da Riga, nel Parco nazionale di Ķemeri. Dalla stazione di Ķemeri si attraversano i binari e si seguono i cartelli per la passerella (Lielā Ķemeru tīreļa laipa): circa 3 km a piedi nel bosco, oppure un Bolt da €4–5. La passerella di legno fa un anello di circa 3,4 km tra laghetti scuri e pini nani, con una torretta panoramica a metà: 1–1,5 ore. Gratuita e aperta tutto l'anno, ma d'inverno la neve non viene tolta e le assi scivolano: scarpe con buona presa. All'alba, verso le 9, è il posto più irreale del viaggio. Rientro a Riga verso le 13."},
+ {id:"r7",city:"riga",day:5,time:"14:30",name:"Quartiere Art Nouveau, Alberta iela",cost:"Gratis",lat:56.9594,lon:24.1070,desc:"La più alta concentrazione di edifici Liberty d'Europa: facciate con volti, draghi e pavoni. Passeggiata di circa 2 km dal centro, con le ultime ore di luce."},
+ {id:"r8",city:"riga",day:5,time:"16:30",name:"Mercatino del giardino Vērmanes",cost:"Gratis",lat:56.9535,lon:24.1188,desc:"Secondo mercatino, più orientato all'artigianato vero e meno turistico: il posto per i regali. Poi spesa e cena d'addio in appartamento."}
+];
+
+var OFFMAP = {
+ riga:"<b>Palude di Ķemeri (n. 9):</b> è fuori mappa, a circa 40 km verso ovest. Treno dalla stazione centrale in direzione Tukums fino a Ķemeri, circa €2–2,50 a tratta. Controllate gli orari della domenica su pv.lv.<br><br><b>Giorno 6:</b> aeroporto a circa 10 km, bus 22 (circa 30 minuti) o Bolt.",
+ tallinn:"<b>Fuori mappa, giorno 1 ore 10:45:</b> aeroporto di Tallinn, a 4 km dal centro. Tram 4 fino al centro (circa 20 minuti) o 3 Bolt, poi pochi minuti a piedi fino all'appartamento.",
+ helsinki:"<b>Giornata intera senza bagagli:</b> si parte da Tallinn la mattina e si rientra la sera. Il biglietto giornaliero HSL copre tutti gli spostamenti in città e il traghetto per Suomenlinna."
+};
+
+var DAYS = [
+ {n:1,date:"Mer 16 dicembre",route:"Roma → Tallinn",city:"tallinn",title:"Atterraggio a Tallinn, celle del KGB e zuppa d'alce",steps:[
+   {t:"06:10",w:"Volo Wizz Air Roma Fiumicino → Tallinn",p:"Arrivo alle 10:45 ora locale. A quell'ora i treni per Fiumicino non bastano: serve taxi, NCC o auto propria (vedi Consigli).",c:"€55"},
+   {t:"10:45",w:"Dall'aeroporto al centro",p:"Tram 4 o 3 Bolt fino alla Città Vecchia.",c:"~€2–5"},
+   {t:"11:30",poi:"ta"},{t:"12:45",w:"Spesa al supermercato",p:"Colazioni per 3 mattine e ingredienti per la cena di giovedì sera. A Tallinn le catene più diffuse sono Rimi e Selver. Pranzo veloce con quello che comprate.",c:"~€12–15"},{t:"14:00",poi:"t2",tag:"Esperienza particolare"},{t:"15:00",poi:"t3"},{t:"17:00",poi:"t4"},{t:"19:00",poi:"t5",tag:"Esperienza particolare"}]},
+ {n:2,date:"Gio 17 dicembre",route:"Tallinn ↔ Helsinki",city:"helsinki",title:"Helsinki in giornata: fortezza tra i ghiacci e sauna sul Baltico",steps:[
+   {t:"07:30",poi:"t10"},{t:"09:30",poi:"h1"},{t:"10:00",poi:"h3"},{t:"10:20",poi:"h4"},{t:"12:30",poi:"h5"},{t:"13:30",poi:"h6"},{t:"14:15",poi:"h7"},{t:"15:00",poi:"h8"},{t:"16:00",poi:"h2",tag:"Esperienza particolare"},{t:"19:30",poi:"h9"},
+   {t:"21:45",w:"Cena in appartamento",p:"Circa 15–20 minuti a piedi dal porto. A quest'ora molte cucine chiudono: pasta o zuppa con la spesa fatta mercoledì, dopo la sauna è perfetta.",c:"Già nella spesa"}]},
+ {n:3,date:"Ven 18 dicembre",route:"Tallinn",city:"tallinn",title:"Tallinn sovietica e pattinaggio sotto le guglie",steps:[
+   {t:"10:30",poi:"t9"},{t:"12:00",poi:"t8"},{t:"13:30",poi:"t7"},{t:"14:45",poi:"t6"},{t:"18:00",poi:"tsk",tag:"Serata"},{t:"20:30",poi:"tcc"}]},
+ {n:4,date:"Sab 19 dicembre",route:"Tallinn → Riga",city:"riga",title:"In bus fino a Riga, grattacielo di Stalin e cantina folk",steps:[
+   {t:"09:40",poi:"t1"},{t:"14:00",poi:"r9"},{t:"14:10",poi:"r5"},{t:"15:15",poi:"r6"},{t:"16:15",poi:"ra"},{t:"17:00",poi:"r1"},{t:"18:00",poi:"r2"},{t:"19:30",poi:"r3",tag:"Serata"}]},
+ {n:5,date:"Dom 20 dicembre",route:"Riga",city:"riga",title:"Palude all'alba e Riga Liberty",steps:[
+   {t:"07:30",poi:"r4"},
+   {t:"08:30",poi:"rk",tag:"Esperienza particolare"},
+   {t:"14:30",poi:"r7"},{t:"16:30",poi:"r8"},{t:"18:00",w:"Spesa e cena d'addio in appartamento",p:"Supermercati Rimi o Maxima, aperti anche la domenica. Comprate anche la colazione per lunedì mattina e finite gli avanzi prima del volo.",c:"~€8–10"}]},
+ {n:6,date:"Lun 21 dicembre",route:"Riga → Roma",city:"riga",title:"Ritorno",steps:[
+   {t:"07:45",w:"Verso l'aeroporto di Riga",p:"Bus 22 dal centro (circa 30 minuti) o 3 Bolt. Arrivate verso le 8:30. Con 2 bagni, meglio che metà del gruppo faccia la doccia la sera prima.",c:"~€2–5"},
+   {t:"10:15",w:"Volo Ryanair Riga → Roma Fiumicino",p:"Arrivo alle 12:25 ora italiana.",c:"€76"}]}
+];
+var DAY_CITY_COLOR = {1:C.tallinn,2:C.helsinki,3:C.tallinn,4:C.riga,5:C.riga,6:C.riga};
+
+var PHOTO={t2:"KGB prison cells Tallinn Pagari",t3:"Kohtuotsa viewing platform Tallinn winter",t4:"Tallinn Christmas market Town Hall Square",t5:"III Draakon Tallinn tavern",t10:"Tallink ferry Tallinn Helsinki winter",t9:"Telliskivi Creative City Tallinn",t8:"Balti Jaama Turg Tallinn",t7:"Patarei prison Tallinn",t6:"Linnahall Tallinn",
+ h3:"Suomenlinna ferry winter",h4:"Suomenlinna winter snow",h5:"Vanha kauppahalli Helsinki",h6:"Helsinki Christmas market Senate Square",h7:"Temppeliaukio church Helsinki",h8:"Oodi library Helsinki",h2:"Löyly Helsinki winter sauna",
+ r5:"Riga Central Market pavilions",r6:"Latvian Academy of Sciences Riga",r1:"Riga Christmas market Dome Square",r2:"House of the Blackheads Riga winter",r7:"Alberta iela Art Nouveau Riga",r8:"Vermanes garden Christmas market Riga",kemeri:"Kemeri bog boardwalk winter",rk:"Kemeri bog boardwalk winter",tsk:"Tallinn Old Town ice rink Harju",tcc:"Candlelight concert House of Blackheads Tallinn",r3:"Folkklubs ALA Pagrabs Riga"};
+function photoLink(q,col){return q?'<a class="maplink photolink" style="--c:'+col+'" href="https://www.google.com/search?tbm=isch&q='+encodeURIComponent(q)+'" target="_blank" rel="noopener">Guarda le foto</a>':"";}
+var byId = {}; POIS.forEach(function(p){byId[p.id]=p;});
+function esc(s){return String(s).replace(/[&<>"]/g,function(ch){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch];});}
+
+/* render itinerary */
+var daysEl = document.getElementById("days");
+daysEl.innerHTML = DAYS.map(function(d){
+  var items = d.steps.map(function(s){
+    var p = s.poi ? byId[s.poi] : null;
+    var name = p ? p.name : s.w;
+    var desc = p ? p.desc : s.p;
+    var cost = p ? p.cost : (s.c||"");
+    var col = p ? C[p.city] : DAY_CITY_COLOR[d.n];
+    var tag = s.tag ? '<span class="tag" style="--c:'+col+'">'+esc(s.tag)+'</span>' : "";
+    var ph = photoLink(p ? PHOTO[p.id] : (s.q && PHOTO[s.q]), col);
+    var link = (p||ph) ? '<br><span class="links">'+(p?'<button class="maplink" style="--c:'+col+'" data-poi="'+p.id+'">Vedi sulla mappa</button>':'')+ph+'</span>' : "";
+    return '<li><span class="t num">'+esc(s.t)+'</span><div class="what"><b>'+esc(name)+'</b>'+tag+'<p>'+esc(desc)+'</p>'+link+'</div><span class="cost num">'+esc(cost)+'</span></li>';
+  }).join("");
+  return '<article class="day" style="--c:'+DAY_CITY_COLOR[d.n]+'"><div class="day-head"><div class="day-n num">'+d.n+'</div><div><div class="day-d">'+esc(d.date)+'</div><div class="day-r">'+esc(d.route)+'</div></div></div><div class="day-body"><h3>'+esc(d.title)+'</h3><ol class="steps">'+items+'</ol></div></article>';
+}).join("");
+daysEl.addEventListener("click",function(e){
+  var b = e.target.closest(".maplink"); if(!b) return;
+  var p = byId[b.dataset.poi]; state.city = p.city; state.day = 0; state.sel = p.id; renderMap();
+  document.getElementById("mappa").scrollIntoView();
+});
+
+/* ---------- Projection helper ---------- */
+function proj(b, W){
+  var k = Math.cos((b.minLat+b.maxLat)/2*Math.PI/180);
+  var w = (b.maxLon-b.minLon)*k, h = b.maxLat-b.minLat, H = W*h/w;
+  return {W:W,H:H,k:k,p:function(lon,lat){return [(lon-b.minLon)*k/w*W,(b.maxLat-lat)/h*H];}};
+}
+function poly(P, pts){return pts.map(function(q){var xy=P.p(q[0],q[1]);return xy[0].toFixed(1)+","+xy[1].toFixed(1);}).join(" ");}
+function pathD(P, pts, smooth){
+  var xy = pts.map(function(q){return P.p(q[0],q[1]);});
+  if(!smooth) return "M"+xy.map(function(a){return a[0].toFixed(1)+" "+a[1].toFixed(1);}).join(" L");
+  var d="M"+xy[0][0].toFixed(1)+" "+xy[0][1].toFixed(1);
+  for(var i=1;i<xy.length;i++){var m=[(xy[i-1][0]+xy[i][0])/2,(xy[i-1][1]+xy[i][1])/2];d+=" Q"+xy[i-1][0].toFixed(1)+" "+xy[i-1][1].toFixed(1)+" "+m[0].toFixed(1)+" "+m[1].toFixed(1);}
+  var L=xy[xy.length-1]; return d+" L"+L[0].toFixed(1)+" "+L[1].toFixed(1);
+}
+
+/* ---------- Overview map ---------- */
+(function(){
+  var B={minLat:55.9,maxLat:60.95,minLon:20.8,maxLon:28.3}, P=proj(B,520);
+  var baltics=[[28.3,59.46],[27.4,59.44],[26.5,59.56],[25.5,59.57],[24.75,59.46],[24.05,59.36],[23.45,59.24],[23.45,58.95],[23.75,58.72],[23.6,58.55],[24.1,58.3],[24.5,58.36],[24.4,57.9],[24.36,57.3],[24.1,57.03],[23.7,56.97],[23.2,57.1],[22.6,57.76],[22.0,57.55],[21.56,57.39],[21.1,56.9],[21.0,56.5],[21.1,55.9],[28.3,55.9]];
+  var finland=[[20.8,60.95],[21.35,60.95],[21.5,60.7],[22.2,60.42],[22.6,60.0],[22.95,59.83],[23.5,59.97],[24.3,60.05],[24.94,60.16],[25.6,60.3],[26.5,60.42],[27.5,60.52],[28.3,60.56],[28.3,60.95]];
+  var sw = P.p(20.8,55.9);
+  var R={riga:P.p(24.11,56.95),tallinn:P.p(24.75,59.44),helsinki:P.p(24.94,60.17)};
+  var sa=P.p(22.5,58.42), hi=P.p(22.65,58.9), s1=P.p(22.5-0.85,58.42), s2=P.p(22.5,58.42-0.22), h1=P.p(22.65-0.45,58.9), h2=P.p(22.65,58.9-0.13);
+  var ground = pathD(P,[[24.75,59.44],[24.2,58.9],[24.5,58.38],[24.45,57.4],[24.11,56.95]],true);
+  var ferry = "M"+R.tallinn[0]+" "+R.tallinn[1]+" Q"+(R.tallinn[0]+34)+" "+((R.tallinn[1]+R.helsinki[1])/2)+" "+R.helsinki[0]+" "+R.helsinki[1]+" Q"+(R.tallinn[0]-22)+" "+((R.tallinn[1]+R.helsinki[1])/2)+" "+R.tallinn[0]+" "+R.tallinn[1];
+  var romeA=[sw[0]+10,P.H-6];
+  var fly1="M"+romeA[0]+" "+romeA[1]+" Q"+(R.tallinn[0]-260)+" "+(R.tallinn[1]+60)+" "+R.tallinn[0]+" "+R.tallinn[1];
+  var fly2="M"+R.riga[0]+" "+R.riga[1]+" Q"+(R.riga[0]-40)+" "+(R.riga[1]+50)+" "+(romeA[0]+2)+" "+(romeA[1]-2);
+  var svg=document.getElementById("overview");
+  svg.setAttribute("viewBox","0 0 "+P.W+" "+P.H.toFixed(0));
+  var cities=[["riga","Riga","Notti 4–5"],["tallinn","Tallinn","Notti 1–3"],["helsinki","Helsinki","In giornata"]];
+  svg.innerHTML =
+   '<rect width="100%" height="100%" fill="var(--sea)"/>'+
+   '<polygon points="'+poly(P,finland)+'" fill="var(--land)"/>'+
+   '<polygon points="'+poly(P,baltics)+'" fill="var(--land)"/>'+
+   '<ellipse cx="'+sa[0]+'" cy="'+sa[1]+'" rx="'+(sa[0]-s1[0])+'" ry="'+(s2[1]-sa[1])+'" fill="var(--land)"/>'+
+   '<ellipse cx="'+hi[0]+'" cy="'+hi[1]+'" rx="'+(hi[0]-h1[0])+'" ry="'+(h2[1]-hi[1])+'" fill="var(--land)"/>'+
+   '<text x="'+P.p(22.3,59.6)[0]+'" y="'+P.p(22.3,59.6)[1]+'" font-size="15" fill="var(--ink-soft)" font-style="italic">Golfo di Finlandia</text>'+
+   '<text x="'+P.p(22.9,57.55)[0]+'" y="'+P.p(22.9,57.55)[1]+'" font-size="13" fill="var(--ink-soft)" font-style="italic">Golfo di Riga</text>'+
+   '<text x="'+P.p(26.2,58.6)[0]+'" y="'+P.p(26.2,58.6)[1]+'" font-size="13" fill="var(--ink-soft)" letter-spacing="2">ESTONIA</text>'+
+   '<text x="'+P.p(25.6,56.5)[0]+'" y="'+P.p(25.6,56.5)[1]+'" font-size="13" fill="var(--ink-soft)" letter-spacing="2">LETTONIA</text>'+
+   '<text x="'+P.p(25.9,60.75)[0]+'" y="'+P.p(25.9,60.75)[1]+'" font-size="13" fill="var(--ink-soft)" letter-spacing="2">FINLANDIA</text>'+
+   '<path d="'+fly1+'" fill="none" stroke="var(--route)" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round" opacity=".7"/>'+
+   '<path d="'+fly2+'" fill="none" stroke="var(--route)" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round" opacity=".7"/>'+
+   '<path class="draw" pathLength="1" d="'+ground+'" fill="none" stroke="var(--route)" stroke-width="4" stroke-linecap="round"/>'+
+   '<path class="draw" pathLength="1" d="'+ferry+'" fill="none" stroke="var(--route)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1" style="animation-delay:1.9s"/>'+
+   '<text x="'+(P.p(24.55,58.0)[0]+10)+'" y="'+P.p(24.55,58.0)[1]+'" font-size="13" font-weight="650" fill="var(--ink)">bus 4 h 20</text>'+
+   '<text x="'+(R.tallinn[0]+30)+'" y="'+((R.tallinn[1]+R.helsinki[1])/2+4)+'" font-size="13" font-weight="650" fill="var(--ink)">traghetto A/R in giornata</text>'+
+   '<text x="'+(romeA[0]+8)+'" y="'+(romeA[1]-8)+'" font-size="14" font-weight="700" fill="var(--ink)">da e per Roma, ~3 h</text>'+
+   (function(){var k=P.p(23.47,56.955);return '<g class="city-hit" tabindex="0" role="button" aria-label="Palude di Ķemeri, apri la mappa di Riga" data-city="riga"><circle cx="'+k[0]+'" cy="'+k[1]+'" r="6" fill="var(--pine)" stroke="var(--surface)" stroke-width="2"/><text x="'+(k[0]-8)+'" y="'+(k[1]+20)+'" font-size="12.5" font-weight="650" fill="var(--ink)" text-anchor="middle">Palude di Ķemeri</text></g>';})()+
+   cities.map(function(c){var xy=R[c[0]];var lx=c[0]==="helsinki"?xy[0]+16:xy[0]+16, ly=c[0]==="helsinki"?xy[1]-14:xy[1]+5;
+     return '<g class="city-hit" tabindex="0" role="button" aria-label="Apri la mappa di '+c[1]+'" data-city="'+c[0]+'">'+
+       '<circle class="halo" cx="'+xy[0]+'" cy="'+xy[1]+'" r="22" fill="transparent"/>'+
+       '<circle cx="'+xy[0]+'" cy="'+xy[1]+'" r="10" fill="'+C[c[0]]+'" stroke="var(--surface)" stroke-width="3"/>'+
+       '<text x="'+lx+'" y="'+ly+'" font-size="22" font-weight="800" fill="var(--ink)" style="font-variation-settings:\'wdth\' 80">'+c[1]+'</text>'+
+       '<text x="'+lx+'" y="'+(ly+17)+'" font-size="13" fill="var(--ink-soft)">'+c[2]+'</text></g>';
+   }).join("");
+  function go(el){state.city=el.dataset.city;state.day=0;state.sel=null;renderMap();document.getElementById("mappa").scrollIntoView();}
+  svg.addEventListener("click",function(e){var g=e.target.closest(".city-hit");if(g)go(g);});
+  svg.addEventListener("keydown",function(e){var g=e.target.closest(".city-hit");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();go(g);}});
+})();
+
+/* ---------- City maps ---------- */
+var CITY = {
+ riga:{b:{minLat:56.937,maxLat:56.963,minLon:24.075,maxLon:24.135},
+   draw:function(P){
+     var river=pathD(P,[[24.14,56.928],[24.13,56.934],[24.112,56.940],[24.100,56.946],[24.094,56.951],[24.090,56.957],[24.083,56.964]],true);
+     var canal=pathD(P,[[24.117,56.944],[24.115,56.948],[24.113,56.952],[24.106,56.955],[24.099,56.954],[24.096,56.952]],true);
+     var ot=P.p(24.106,56.949);
+     return '<rect width="100%" height="100%" fill="var(--land)"/>'+
+       '<path d="'+river+'" stroke="var(--sea)" stroke-width="'+(P.W*0.075).toFixed(0)+'" fill="none" stroke-linecap="round"/>'+
+       '<path d="'+canal+'" stroke="var(--sea)" stroke-width="5" fill="none"/>'+
+       '<ellipse cx="'+ot[0]+'" cy="'+ot[1]+'" rx="'+(P.W*0.085)+'" ry="'+(P.W*0.07)+'" fill="var(--land-2)"/>'+
+       lbl(P,24.085,56.941,"Daugava")+lbl(P,24.103,56.9535,"Città Vecchia")+lbl(P,24.112,56.9615,"Quartiere Art Nouveau");
+   }},
+ tallinn:{b:{minLat:59.4255,maxLat:59.4535,minLon:24.715,maxLon:24.785},
+   draw:function(P){
+     var sea=[[24.715,59.4535],[24.715,59.4478],[24.728,59.4500],[24.736,59.4515],[24.745,59.4507],[24.752,59.4472],[24.760,59.4460],[24.765,59.4438],[24.770,59.4427],[24.776,59.4432],[24.785,59.4462],[24.785,59.4535]];
+     var ot=[[24.736,59.4395],[24.742,59.4418],[24.750,59.4400],[24.7505,59.4355],[24.745,59.4340],[24.737,59.4355]];
+     return '<rect width="100%" height="100%" fill="var(--land)"/>'+
+       '<polygon points="'+poly(P,sea)+'" fill="var(--sea)"/>'+
+       '<polygon points="'+poly(P,ot)+'" fill="var(--land-2)"/>'+
+       lbl(P,24.755,59.4505,"Golfo di Finlandia")+lbl(P,24.7465,59.4348,"Città Vecchia")+lbl(P,24.722,59.4430,"Kalamaja");
+   }},
+ helsinki:{b:{minLat:60.140,maxLat:60.180,minLon:24.900,maxLon:24.995},
+   draw:function(P){
+     var land=[[24.900,60.180],[24.900,60.158],[24.912,60.153],[24.920,60.1505],[24.926,60.1495],[24.931,60.152],[24.940,60.1555],[24.952,60.1560],[24.962,60.1585],[24.958,60.1625],[24.9545,60.1655],[24.956,60.1675],[24.963,60.1670],[24.968,60.1650],[24.978,60.1648],[24.984,60.1680],[24.978,60.1712],[24.968,60.1712],[24.966,60.1745],[24.975,60.180]];
+     var s=P.p(24.987,60.146), sx=P.p(24.987-0.012,60.146), sy=P.p(24.987,60.146-0.0045);
+     var bay=[[24.930,60.1745],[24.936,60.1790],[24.935,60.180],[24.927,60.180]];
+     return '<rect width="100%" height="100%" fill="var(--sea)"/>'+
+       '<polygon points="'+poly(P,land)+'" fill="var(--land)"/>'+
+       '<ellipse cx="'+s[0]+'" cy="'+s[1]+'" rx="'+(s[0]-sx[0])+'" ry="'+(sy[1]-s[1])+'" fill="var(--land)" transform="rotate(-25 '+s[0]+' '+s[1]+')"/>'+
+       lbl(P,24.938,60.1445,"Mar Baltico")+lbl(P,24.970,60.1515,"Suomenlinna")+lbl(P,24.918,60.1685,"Kamppi");
+   }}
+};
+function lbl(P,lon,lat,t){var xy=P.p(lon,lat);return '<text x="'+xy[0].toFixed(1)+'" y="'+xy[1].toFixed(1)+'" font-size="15" fill="var(--ink-soft)" font-style="italic" text-anchor="middle" pointer-events="none">'+esc(t)+'</text>';}
+
+var state={city:"tallinn",day:0,sel:null};
+var tabs=document.getElementById("cityTabs"), chips=document.getElementById("dayChips"), svgC=document.getElementById("citymap"), info=document.getElementById("info"), plist=document.getElementById("plist"), off=document.getElementById("offmap");
+tabs.innerHTML=["tallinn","helsinki","riga"].map(function(c){return '<button type="button" data-city="'+c+'"><span class="dot" style="background:'+C[c]+'"></span>'+CITY_NAME[c]+'</button>';}).join("");
+tabs.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;state.city=b.dataset.city;state.day=0;state.sel=null;renderMap();});
+chips.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;state.day=+b.dataset.day;renderMap();});
+
+function renderMap(){
+  var city=state.city, list=POIS.filter(function(p){return p.city===city;});
+  [].forEach.call(tabs.children,function(b){b.setAttribute("aria-pressed",b.dataset.city===city);});
+  var days=[]; list.forEach(function(p){if(days.indexOf(p.day)<0)days.push(p.day);});
+  chips.innerHTML='<button type="button" data-day="0" aria-pressed="'+(state.day===0)+'">Tutti i giorni</button>'+days.map(function(d){return '<button type="button" data-day="'+d+'" aria-pressed="'+(state.day===d)+'">Giorno '+d+'</button>';}).join("");
+  var cfg=CITY[city], P=proj(cfg.b,640);
+  svgC.setAttribute("viewBox","0 0 "+P.W+" "+P.H.toFixed(0));
+  // scale bar 500 m
+  var px500=500/(111320*P.k)/(cfg.b.maxLon-cfg.b.minLon)*P.W;
+  var sb='<g transform="translate(16,'+(P.H-18).toFixed(0)+')"><rect x="-6" y="-20" width="'+(px500+60)+'" height="30" rx="8" fill="var(--surface)" opacity=".85"/><line x1="0" y1="0" x2="'+px500.toFixed(1)+'" y2="0" stroke="var(--ink)" stroke-width="3"/><line x1="0" y1="-5" x2="0" y2="5" stroke="var(--ink)" stroke-width="2"/><line x1="'+px500.toFixed(1)+'" y1="-5" x2="'+px500.toFixed(1)+'" y2="5" stroke="var(--ink)" stroke-width="2"/><text x="'+(px500+8).toFixed(1)+'" y="5" font-size="13" fill="var(--ink)">500 m</text></g>';
+  var pins=list.map(function(p,i){
+    if(p.off) return "";
+    var xy=P.p(p.lon,p.lat), dim=state.day&&p.day!==state.day, sel=state.sel===p.id;
+    return '<g class="pin'+(dim?" dim":"")+(sel?" sel":"")+'" tabindex="0" role="button" data-id="'+p.id+'" aria-label="'+(i+1)+'. '+esc(p.name)+'" transform="translate('+xy[0].toFixed(1)+','+xy[1].toFixed(1)+')">'+
+      '<circle class="ring" r="'+(sel?20:0)+'"/><circle class="b" r="'+(sel?15:13)+'" fill="'+C[city]+'"/><text text-anchor="middle" dy="4.5">'+(i+1)+'</text></g>';
+  });
+  // draw selected last so it sits on top
+  var selIdx=list.findIndex(function(p){return p.id===state.sel;});
+  if(selIdx>=0){var s=pins.splice(selIdx,1)[0];pins.push(s);}
+  var edge=city==="riga"?'<g><rect x="8" y="'+(P.H/2-18).toFixed(0)+'" width="150" height="30" rx="15" fill="var(--surface)" opacity=".9"/><text x="20" y="'+(P.H/2+2).toFixed(0)+'" font-size="14" font-weight="650" fill="var(--ink)">← Ķemeri, 40 km</text></g>':"";
+  svgC.innerHTML=cfg.draw(P)+sb+edge+pins.join("");
+  plist.innerHTML=list.map(function(p,i){
+    var dim=state.day&&p.day!==state.day;
+    return '<li class="'+(dim?"dim":"")+'"><button type="button" data-id="'+p.id+'" aria-current="'+(state.sel===p.id)+'"><span class="n num" style="background:'+C[city]+'">'+(i+1)+'</span><span>'+esc(p.name)+'<small class="num">Giorno '+p.day+', ore '+p.time+(p.off?', fuori mappa':'')+'</small></span></button></li>';
+  }).join("");
+  off.hidden=!OFFMAP[city]; off.innerHTML=OFFMAP[city]||"";
+  var sp=byId[state.sel];
+  if(sp&&sp.city===city){
+    info.className="info";
+    info.innerHTML='<h4>'+esc(sp.name)+'</h4><div class="meta num">Giorno '+sp.day+', ore '+sp.time+'</div><span class="price num">'+esc(sp.cost)+'</span><p>'+esc(sp.desc)+'</p>'+(PHOTO[sp.id]?'<p style="margin-top:8px">'+photoLink(PHOTO[sp.id],C[sp.city])+'</p>':'');
+  } else {
+    info.className="info empty";
+    info.innerHTML='<p>Seleziona un punto sulla mappa o dall\'elenco. '+list.length+' tappe a '+CITY_NAME[city]+'.</p>';
+  }
+}
+function pick(id){state.sel=id;var p=byId[id];if(state.day&&p.day!==state.day)state.day=0;renderMap();}
+svgC.addEventListener("click",function(e){var g=e.target.closest(".pin");if(g)pick(g.dataset.id);});
+svgC.addEventListener("keydown",function(e){var g=e.target.closest(".pin");if(g&&(e.key==="Enter"||e.key===" ")){e.preventDefault();var id=g.dataset.id;pick(id);var n=svgC.querySelector('.pin[data-id="'+id+'"]');if(n)n.focus();}});
+plist.addEventListener("click",function(e){var b=e.target.closest("button");if(b)pick(b.dataset.id);});
+renderMap();
+
+/* ---------- Budget ---------- */
+var BUD=[
+ {k:"Alloggi, 5 notti",d:"Prezzi Airbnb reali: Tallinn €828 per 3 notti e Riga €366 per 2 notti, divisi per 8. Calcolato sul numero di persone.",v:[1194,1194,1194],fixedTotal:true},
+ {k:"Voli",d:"Wizz Air Roma → Tallinn €55 e Ryanair Riga → Roma €76, solo zaino.",v:[131,131,131]},
+ {k:"Cibo e bevande",d:"Sei giorni: colazioni e 2 cene in appartamento (giovedì a Tallinn, domenica a Riga), pranzi ai mercati, altre cene economiche, birre al Folkklubs, vin brulé ai mercatini.",v:[140,185,250]},
+ {k:"Esperienze e ingressi",d:"Löyly €29, celle KGB €8–10 (sconto studenti), terrazza di Riga €8, Temppeliaukio, pattinaggio con noleggio. Lo scenario comodo include il concerto a lume di candela.",v:[65,75,105]},
+ {k:"Traghetti Tallinn ↔ Helsinki",d:"Prezzo reale: €35 andata e ritorno (7:30 e 19:30).",v:[35,35,35]},
+ {k:"Trasporti locali",d:"Aeroporti di Tallinn e Riga, giornaliero HSL a Helsinki, tram, treno per Ķemeri.",v:[25,32,42]},
+ {k:"Bus Tallinn → Riga",d:"Prezzo reale: FlixBus delle 9:40, commissione inclusa.",v:[16.98,16.98,16.98]},
+ {k:"Imprevisti e assicurazione",d:"Margine per il transfer notturno per Fiumicino, bagagli extra, polizza viaggio.",v:[20,35,50]}
+];
+function val(r){return r.fixedTotal? r.v[bstate.s]/bstate.n : r.v[bstate.s];}
+var SC=["Risparmio","Medio","Comodo"], bstate={n:8,s:1};
+var scen=document.getElementById("scen");
+scen.innerHTML=SC.map(function(s,i){return '<button type="button" data-s="'+i+'">'+s+'</button>';}).join("");
+scen.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;bstate.s=+b.dataset.s;renderBud();});
+document.getElementById("minus").addEventListener("click",function(){bstate.n=Math.max(6,bstate.n-1);renderBud();});
+document.getElementById("plus").addEventListener("click",function(){bstate.n=Math.min(20,bstate.n+1);renderBud();});
+var eur=function(x){return "€"+Math.round(x).toLocaleString("it-IT");};
+function renderBud(){
+  [].forEach.call(scen.children,function(b){b.setAttribute("aria-pressed",+b.dataset.s===bstate.s);});
+  document.getElementById("people").textContent=bstate.n;
+  document.getElementById("minus").disabled=bstate.n<=6;
+  var tot=0,max=0; BUD.forEach(function(r){var v=val(r);tot+=v;max=Math.max(max,r.fixedTotal?v:r.v[2]);});
+  document.getElementById("ppTot").textContent=eur(tot);
+  document.getElementById("grpTot").textContent="Gruppo di "+bstate.n+": "+eur(tot*bstate.n);
+  document.getElementById("rows").innerHTML=BUD.map(function(r){var v=val(r);
+    var extra=r.fixedTotal?" Totale fisso "+eur(r.v[0])+", qui diviso per "+bstate.n+".":" Intervallo: "+eur(r.v[0])+"–"+eur(r.v[2])+".";
+    return '<div class="row"><b>'+esc(r.k)+'</b><span class="v num">'+eur(v)+'</span><div class="bar"><i style="width:'+Math.min(100,v/max*100).toFixed(1)+'%"></i></div><p>'+esc(r.d)+extra+'</p></div>';
+  }).join("");
+}
+renderBud();
+})();
+</script>
+</body>
+</html>
